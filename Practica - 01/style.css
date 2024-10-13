@@ -1,0 +1,196 @@
+@import url(https://db.onlinewebfonts.com/c/3cfe6d7e2919d98e0c6994d3dfbeda2c?family=Turista+Gorda+NF+W01+Regular);
+
+body, html {
+    color: #f5ec70;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Turista Gorda NF W01 Regular', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+/* Fondo de la primera seccion */
+.Inicio {
+    background-image: url('imagenes/Lana_Fondo.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Imagen fija al hacer scroll */
+    height: 100vh; /* Altura d la ventana */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #f5ec70;
+}
+
+.Inicio fieldset {
+    width: 50%;
+    padding: 2em;
+    border: 2px solid #5c5a5a;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.Inicio h1 {
+    font-size: 2em;
+    color: #f5ec70;
+}
+
+.Productos_mas_vendidos {
+    background-color: #b88495; 
+    padding: 20px;
+}
+
+.Productos_mas_vendidos h2 {
+    font-size: 2em;
+    color: #f5ec70;
+    text-align: center;
+    margin-bottom: 20px; /* Espacio entre el título y las imwgenes */
+}
+
+.productos-mostrados {
+    display: flex;
+    justify-content: space-around; /* Espacio igual entre productos */
+    flex-wrap: wrap; /* Permite q los productos se acomoden en varias filas */
+    margin-top: 20px; /* Espacio arriba d la galeria d productos */
+}
+
+.producto {
+    flex: 1 1 30%; /* Cada producto ocupa un 30% del ancho del contenedor*/
+    max-width: 300px; /* Máximo ancho para cada producto */
+    margin: 10px;
+    text-align: center;
+    font-family: 'Turista Gorda NF W01 Regular', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: #f5ec70;
+}
+
+.producto img {
+    width: 20%;  /* La imagen ocupa todo el ancho del contenedor, por q el maximo es 30% */
+    height: auto;
+    width: 250px;
+    height: 250px;
+    border-radius: 10px; /* Para redondear bordes */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: contain;
+}
+
+.Cabecera {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333c41;
+}
+
+.Cabecera fieldset {
+    padding: 2em;
+    border: 2px solid #424444;
+    gap: 18px;
+    display: flex;
+    justify-content: center;
+}
+
+.Cabecera a {
+    margin: 0 10px; /* Espacio entre enlaces */
+    text-align: center;
+    color: #f5ec70;
+    font-family: 'Turista Gorda NF W01 Regular', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.Cabecera a:hover {
+    color: #f8f3b1;
+}
+
+.Vision {
+    background-color: #333c41;
+    color: #b5d9f1;
+    text-align: center;
+    padding: 20px;
+    margin: 0; 
+}
+
+.Vision h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.Vision p {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+.Catalogo head, body{
+    background-color: #3d4246;
+    font-family: 'Turista Gorda NF W01 Regular', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.Mostrador {
+    color: #b88495;
+    text-align: center;
+}
+
+.producto_mostrador {
+    display: flex; /* Flexbox para alinear la imagen y el texto en una fila */
+    flex-direction: column; /* Alinea en fila  la imagn al lado del texto */
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    max-width: 600px; 
+    margin: 10px auto; /* Centra el contenedor en la página */
+    padding: 10px;
+    background-color: #40474b;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+.producto_mostrador img {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: contain;
+    margin-right: 15px; /* Aniade espacio entre la imagen y el texto */
+}
+
+.producto_mostrador p {
+    color: #b88495;
+    font-size: 18px;
+    margin: 15px 10; /* Aniade un margen vertical entre los párrafos */
+}
+
+.Sesion {
+    text-align: center;
+}
+
+.Sesion h1 {
+    color: #f5ec70;
+    font-size: 48px;
+}
+
+.Sesion h2{
+    font-size: 36px;
+}
+
+.Registro {
+    text-align: center;
+}
+
+.Registro h1 {
+    color: #f5ec70;
+    font-size: 48px;
+}
+
+.Registro h2{
+    font-size: 36px;
+}
+
+button {
+    color: #f5ec70;
+    font-size: 1.6rem;
+    font-family: 'Turista Gorda NF W01 Regular', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #b88495;
+    border-radius: 0%;
+    border-color: #632137;
+    padding: 10px;
+}

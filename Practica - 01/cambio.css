@@ -1,0 +1,110 @@
+@import url(https://db.onlinewebfonts.com/c/3cfe6d7e2919d98e0c6994d3dfbeda2c?family=Turista+Gorda+NF+W01+Regular);
+
+body {
+    font-family: 'Turista Gorda NF W01 Regular', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    background-color: #5c5a5a;
+    margin: 0;
+    padding: 0;
+    color: #f5ec70;
+}
+
+h1 {
+    color: #f5ec70;
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+.carousel-container {
+    position: relative;
+    max-width: 400px;  /* tamanio del carrusel */
+    margin: 20px auto;  /* Centrado en la pagina */
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.carousel {
+    display: flex;
+    width: 200%; /* dos imágenes: 100% cada una */
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Cada imagen de katy en el carrusel ocupa el 100% del espacio */
+.carousel-item {
+    flex: 1 0 100%; 
+    display: flex;
+    justify-content: center; /* Centrar la imagen dentro del carrusel */
+    align-items: center;
+}
+
+/* Ajuste de las imágenes */
+.carousel img {
+    width: 100%; 
+    height: auto;
+    max-width: 100%;  /* Limitar el tamanio máximo para que no se salga del contenedor */
+    object-fit: cover;  /* Mantener la proporcion de la imagen */
+    border-radius: 10px;
+}
+
+
+/* Ocultar los inputs de radio */
+input[type="radio"] {
+    display: none;
+}
+
+/* Flechas para moverse izquierda o derecha */
+.controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.controls label {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.indicators {
+    margin-top: 10px;
+}
+
+.indicators label {
+    background-color: #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+/* Transiciones */
+input#image1:checked ~ .carousel {
+    transform: translateX(0%);
+}
+
+input#image2:checked ~ .carousel {
+    transform: translateX(-100%);
+}
+
+input#image1:checked ~ .indicators label:nth-child(1),
+input#image2:checked ~ .indicators label:nth-child(2){
+    background-color: #b88495;
+}
+
+button {
+    color: #f5ec70;
+    font-size: 2rem;
+    font-family: 'Turista Gorda NF W01 Regular', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #b88495;
+    border-radius: 0%;
+    border-color: #632137;
+}
