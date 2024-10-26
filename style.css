@@ -1,0 +1,60 @@
+@import url(https://db.onlinewebfonts.com/c/3cfe6d7e2919d98e0c6994d3dfbeda2c?family=Turista+Gorda+NF+W01+Regular);
+
+@font-face {
+    font-family: '143Font';
+    src: url('fonts/143_font.ttf') format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    color: #f5ec70;
+    height: 100%;
+    font-family: '143Font', sans-serif;
+    overflow: hidden;
+}
+
+#background-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    min-width: 100%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+.left-bar, .right-bar {
+    position: fixed;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    background-color: #00BFFF;
+    z-index: 0;
+    padding: 20px; /* Espacio interno para el contenido */
+    overflow-y: auto; /* Agrega scroll si el contenido excede la altura */
+}
+
+.left-bar {
+    left: 0;
+}
+
+.right-bar {
+    right: 0;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
