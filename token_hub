@@ -1,8 +1,0 @@
-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
-
-Subir archivos a github:
-
-git checkout main
-git add .
-git commit -m "Descripcion del commit"
-git push origin main
