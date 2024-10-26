@@ -1,0 +1,102 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #6d5dfc, #9787f5);
+    color: #ffffff;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 20px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+#tabla {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.celda {
+    width: 100px;
+    height: 100px;
+    background-color: #5f93fc;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5em;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.celda:hover {
+    background-color: #82aefc;
+    transform: scale(1.05);
+}
+
+button {
+    margin: 20px;
+    padding: 10px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #6d5dfc;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+    background-color: #f1f1f1;
+    color: #9787f5;
+}
+
+#Tabla_tiempos {
+    width: 80%;
+    margin-top: 30px;
+    border-collapse: collapse;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#Tabla_tiempos th, #Tabla_tiempos td {
+    padding: 12px;
+    text-align: center;
+    font-size: 1.1em;
+    color: #ffffff;
+}
+
+#Tabla_tiempos th {
+    background-color: #6d5dfc;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid #ffffff;
+}
+
+#Tabla_tiempos td {
+    background-color: #5f93fc;
+    border: 1px solid #6d5dfc;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+#Tabla_tiempos tr:nth-child(even) td {
+    background-color: #82aefc;
+}
+
+#Tabla_tiempos tr:hover td {
+    background-color: #6d5dfc;
+    color: #ffffff;
+}
