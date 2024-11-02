@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Buscaminas</title>
+</head>
+<body oncontextmenu="return false">
+    <style>
+        * {
+            transition: all 1s;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            background-color: rgb(50, 101, 168);
+            color: lightskyblue;
+        }
+
+        table {
+            background: lightslategray;
+            margin: auto;
+        }
+
+        td {
+            border: rgba(0, 0, 0, 0.25) 1px solid;
+            text-align: center;
+            font-size: 120%;
+            color: azure;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            box-shadow: inset 3px 3px 0 0 rgba(255, 255, 255, 0.5),
+            inset -3px -3px 0 0 rgba(0, 0, 0, 0.5);
+        }
+
+        button {
+            background-color: lightskyblue;
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #tablero {
+            display: none; 
+        }
+
+        label, select  {
+            color: black;
+            background-color: lightskyblue;
+            display: block;
+            margin: 10px auto;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+
+    <h1 style="text-align: center;">Practica 03 - Minesweeper</h1>
+    <div style="text-align: center;">
+        <label for="dificultad">Selecciona la dificultad:</label>
+        <select id="dificultad">
+            <option value="1">Fácil (5x5)</option>
+            <option value="2">Medio (10x10)</option>
+            <option value="3">Difícil (15x15)</option>
+            <option value="4">Hardcore (25x25)</option>
+            <option value="5">Leyenda (35x35)</option>
+        </select>
+        <button onclick="iniciarJuego()">Iniciar Juego</button>
+    </div>
+    <table cellspacing="0" cellpadding="0" id="tablero"></table>
+
+    <script>
+        let filas, columnas, lado = 30, marcas = 0, minas, tablero = [], enjuego = true, juegoIniciado = false, celdasDescubiertas = 0, html = "";
+
+        function iniciarJuego() {
+            const dificultad = document.getElementById("dificultad").value;
+            switch (dificultad) {
+                case "1": filas = 5; columnas = 5; minas = 5; break;
+                case "2": filas = 10; columnas = 10; minas = 15; break;
+                case "3": filas = 15; columnas = 15; minas = 30; break;
+                case "4": filas = 25; columnas = 25; minas = 75; break;
+                case "5": filas = 35; columnas = 35; minas = 150; break;
+                default: alert("Selección de dificultad no válida."); return;
+            }
+            nuevoJuego();
+        }
+
+        function nuevoJuego() {
+            enjuego = true;
+            juegoIniciado = false;
+            celdasDescubiertas = 0; 
+            html = "";
+            generarTableroHTML();
+            anadirEventos();
+            generarTableroJuego();
+            refrescarTablero();
+        }
+
+        function generarTableroHTML() {
+            for (let f = 0; f < filas; f++) {
+                html += '<tr>';
+                for (let c = 0; c < columnas; c++) {
+                    html += `<td id="celda-${c}-${f}" style="width:${lado}px; height:${lado}px"></td>`;
+                }
+                html += '</tr>';
+            }
+            let tableroHTML = document.getElementById("tablero");
+            tableroHTML.innerHTML = html;
+            tableroHTML.style.width = columnas * lado + "px";
+            tableroHTML.style.height = filas * lado + "px";
+            tableroHTML.style.display = "table"; 
+        }
+
+        function anadirEventos() {
+            for (let f = 0; f < filas; f++) {
+                for (let c = 0; c < columnas; c++) {
+                    let celda = document.getElementById(`celda-${c}-${f}`);
+                    celda.addEventListener("dblclick", (me) => DobleClick(celda, c, f, me));
+                    celda.addEventListener("mouseup", (me) => ClickSimple(celda, c, f, me));
+                }
+            }
+        }
+
+        function DobleClick(celda, c, f, me) {
+            if (!enjuego) return;
+            if (tablero[c][f].estado === "descubierto") return;
+
+            switch (me.button) {
+                case 0:
+                    if (tablero[c][f].estado === "marcado") break;
+                    if (!juegoIniciado) {
+                        do {
+                            generarTableroJuego();
+                        } while (tablero[c][f].valor === -1);
+                    }
+                    tablero[c][f].estado = "descubierto";
+                    celdasDescubiertas++;
+                    juegoIniciado = true;
+                    if (tablero[c][f].valor === 0) {
+                        destaparCeldasAlrededor(c, f);
+                    } else if (tablero[c][f].valor === -1) {
+                        perderJuego();
+                    }
+                    verificarVictoria();
+                    break;
+                case 2:
+                    if (tablero[c][f].estado === "marcado") {
+                        tablero[c][f].estado = undefined;
+                        marcas--;
+                    } else {
+                        tablero[c][f].estado = "marcado"; 
+                        marcas++;
+                    }
+                    break;
+            }
+            refrescarTablero();
+        }
+
+        function ClickSimple(celda, c, f, me) {
+            if (!enjuego) return;
+            if (me.button === 0 && tablero[c][f].estado !== "marcado") {
+                DobleClick(celda, c, f, me); 
+            }
+        }
+
+        function refrescarTablero() {
+            for (let f = 0; f < filas; f++) {
+                for (let c = 0; c < columnas; c++) {
+                    let celda = document.getElementById(`celda-${c}-${f}`);
+
+                    if (tablero[c][f].estado === "descubierto") {
+                        celda.style.boxShadow = "none";
+
+                        switch (tablero[c][f].valor) {
+                            case -1:
+                                celda.innerHTML = '<i class="fas fa-bomb"></i>';
+                                celda.style.color = "black";
+                                celda.style.background = "white";
+                                break;
+                            case 0:
+                                celda.innerHTML = "";
+                                celda.style.background = "lightgrey";
+                                break;
+                            default:
+                                celda.innerHTML = tablero[c][f].valor;
+                                celda.style.color = "blue";
+                                break;
+                        }
+                    } else if (tablero[c][f].estado === "marcado") {
+                        celda.innerHTML = '<i class="fas fa-flag"></i>';
+                        celda.style.background = 'cadetblue';
+                    } else {
+                        celda.innerHTML = "";
+                        celda.style.background = '';
+                    }
+                }
+            }
+        }
+
+        function generarTableroJuego() {
+            vaciarTablero();
+            ponerMinas();
+            contadoresMinas();
+            mostrarMinasEnConsola();
+        }
+
+        function mostrarMinasEnConsola() {
+            let tableroVisual = "";
+            for (let f = 0; f < filas; f++) {
+                for (let c = 0; c < columnas; c++) {
+                    tableroVisual += (tablero[c][f] && tablero[c][f].valor === -1) ? "B " : "0 ";
+                }
+                tableroVisual += "\n";
+            }
+            console.log(tableroVisual);
+        }
+
+        function vaciarTablero() {
+            tablero = [];
+            for (let c = 0; c < columnas; c++) {
+                tablero[c] = [];
+                for (let f = 0; f < filas; f++) {
+                    tablero[c][f] = { valor: 0, estado: undefined };
+                }
+            }
+        }
+
+        function ponerMinas() {
+            let minasColocadas = 0;
+            while (minasColocadas < minas) {
+                let c = Math.floor(Math.random() * columnas);
+                let f = Math.floor(Math.random() * filas);
+                if (tablero[c][f].valor !== -1) {
+                    tablero[c][f].valor = -1;
+                    minasColocadas++;
+                }
+            }
+        }
+
+        function contadoresMinas() {
+            for (let f = 0; f < filas; f++) {
+                for (let c = 0; c < columnas; c++) {
+                    if (tablero[c][f].valor === -1) {
+                        for (let i = -1; i <= 1; i++) {
+                            for (let j = -1; j <= 1; j++) {
+                                if (c + i >= 0 && c + i < columnas && f + j >= 0 && f + j < filas) {
+                                    if (tablero[c + i][f + j].valor !== -1) {
+                                        tablero[c + i][f + j].valor++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function destaparCeldasAlrededor(c, f) {
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    if (c + i >= 0 && c + i < columnas && f + j >= 0 && f + j < filas) {
+                        if (tablero[c + i][f + j].estado !== "descubierto") {
+                            tablero[c + i][f + j].estado = "descubierto";
+                            celdasDescubiertas++;
+                            if (tablero[c + i][f + j].valor === 0) {
+                                destaparCeldasAlrededor(c + i, f + j);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function verificarVictoria() {
+            if (celdasDescubiertas === (filas * columnas - minas)) {
+                alert("¡Has ganado!");
+                enjuego = false;
+            }
+        }
+
+        function perderJuego() {
+            alert("¡Has perdido!");
+            enjuego = false;
+            for (let f = 0; f < filas; f++) {
+                for (let c = 0; c < columnas; c++) {
+                    if (tablero[c][f].valor === -1) {
+                        tablero[c][f].estado = "descubierto";
+                    }
+                }
+            }
+            refrescarTablero();
+        }
+    </script>
+</body>
+</html>
